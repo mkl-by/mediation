@@ -1,0 +1,37 @@
+{% extends 'feedback/home.html' %}
+{% load crispy_forms_tags %}
+{% block contact %}
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>
+                    <H2>Кабинет пользователя</H2>
+                    <div class="media text-muted pt-3">
+                        <img class="mr-2 rounded" style="width: 64px; height: 64px;" src="{{ user.profile.img.url }}">
+                        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                            <strong class="d-block text-gray-dark">@{{ user.username }}</strong>
+                            <b>Email:</b> {{ user.email }}
+                        </p>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <h3>Изменить данные пользователя</h3>
+                    <div class="nav-item">
+                        <a class="btn btn-outline-secondary mr-2" href="{% url "resetpassword" %}">Изменить пароль</a>
+                    </div>
+                    <div class="form-section">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ prof_user|crispy }}
+                            {{ prof_user_tlf_img|crispy }}
+                            <button type="submit" class="btn-outline-warning">Изменить</button>
+                        </form>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+{% endblock contact %}

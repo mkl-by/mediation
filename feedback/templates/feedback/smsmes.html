@@ -1,0 +1,31 @@
+{% extends 'feedback/home.html' %}
+{% load crispy_forms_tags %}
+{% block contact %}
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>
+                    <H2></H2>
+                    <div class="media text-muted pt-3">
+                        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                            <strong class="d-block text-gray-dark">@{{ user.username }}</strong>
+                        </p>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <h3>Задайте свой вопрос и вам перезвонят</h3>
+                    <div class="form-section">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form_mess|crispy }}
+                            <button type="submit" class="btn-outline-warning">Отправить</button>
+                        </form>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+{% endblock contact %}

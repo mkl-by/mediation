@@ -1,0 +1,64 @@
+{% extends 'feedback/home.html' %}
+{% load crispy_forms_tags %}
+{% block contact %}
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#modal').modal('show');
+    });
+</script>
+    <!--Модальное окно-->
+   {% if sms_error %}
+       {{ sms_error }}
+        <div class="modal" id="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ошибка</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <div class="modal-body">
+                    <p class="alert alert-danger" role="alert">{{ sms_error }}</p>
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <a type="button" class="btn btn-primary" href="{% url "profile_user" %}">Исправить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+    <div class="modal fade" id="modal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="text-primary" id="exampleModalLongTitle">На ваш номер телефона направлен проверочный код sms, введите его в форму</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                    <div class="container">
+                        <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>
+                               <div class="form-section">
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {{ sms_form|crispy }}
+                                            <button type="submit" class="btn-outline-warning">Ввод</button>
+                                            <hr>
+                                        </form>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+   {% endif %}
+{% endblock contact %}
